@@ -8,6 +8,12 @@ import SwiftUI
 
 struct CharacterRowView: View {
     let characterView: CharacterModel
+    let deleteAction: (() -> Void)?
+    
+    init(characterView: CharacterModel, deleteAction: (() -> Void)? = nil) {
+        self.characterView = characterView
+        self.deleteAction = deleteAction
+    }
     
     var body: some View {
         HStack(alignment: .center) {
@@ -19,11 +25,25 @@ struct CharacterRowView: View {
                                    specie: characterView.species,
                                    originName: characterView.originName
             )
-            .padding(.horizontal)
+            .padding(.leading)
             
             Spacer()
+            
+            if let action = deleteAction {
+                Button {
+                    action()
+                } label: {
+                    Text("Delete")
+                        .font(.caption)
+                        .bold()
+                        .padding(8)
+                        .background(.red)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+            }
         }
-        .padding(.vertical ,6)
+        .padding(.vertical ,8)
         .padding(.horizontal ,12)
         .background(Color.blue.opacity(0.6))
         .cornerRadius(6)

@@ -14,6 +14,8 @@ protocol HomePageRepository {
     func saveCharacter(character: CharacterModel) -> Bool
     
     func fetchSelectedCharacter() -> CharacterModel?
+    
+    func deleteSelectedCharacter() -> Bool
 }
 
 class HomePageRepositoryImpl: HomePageRepository {
@@ -40,5 +42,9 @@ class HomePageRepositoryImpl: HomePageRepository {
     
     func fetchSelectedCharacter() -> CharacterModel? {
         return localData.fetchCharacterSelection()
+    }
+    
+    func deleteSelectedCharacter() -> Bool {
+        return localData.deleteSelectedCharacter()
     }
 }

@@ -7,48 +7,80 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C370F0E8-3D65-4023-B673-8420B80DC3F6"
+            uuid = "A8D24A6F-3374-48E7-8068-BAC0F5509760"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RickAndMorty_SwiftUI_Ultimate/Service/Combine/CombineService.swift"
+            filePath = "RickAndMorty_SwiftUI_Ultimate/Modules/HomePageModule/Views/HomePageView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "fetchData(url:)"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "56384D27-C151-49CF-8626-8A317CFC2A36"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RickAndMorty_SwiftUI_Ultimate/Modules/HomePageModule/ViewModel/HomePageViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "showAlertWhenDeletingCharacter()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B67840E1-52BF-46EE-ABCF-5C8D14B01B09"
+            uuid = "4421F868-BA09-44F3-BBBA-C1EA1CFE1D1A"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RickAndMorty_SwiftUI_Ultimate/Service/Combine/CombineService.swift"
+            filePath = "RickAndMorty_SwiftUI_Ultimate/Modules/HomePageModule/ViewModel/HomePageViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "fetchData(url:)"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "showAlertWhenDeletingCharacter()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "FCD0D702-3615-49FE-989F-E24EC73554FA"
+            uuid = "A7652983-76B1-47CA-94A4-CDF5FE551F81"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RickAndMorty_SwiftUI_Ultimate/Service/Combine/CombineService.swift"
+            filePath = "RickAndMorty_SwiftUI_Ultimate/Modules/HomePageModule/ViewModel/HomePageViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "fetchData(url:)"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "showScreenAlert()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "724621F6-C5D2-4DCB-B3A6-F1FD60D4AB4B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RickAndMorty_SwiftUI_Ultimate/Modules/HomePageModule/ViewModel/HomePageViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "closeScreenAlert()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
