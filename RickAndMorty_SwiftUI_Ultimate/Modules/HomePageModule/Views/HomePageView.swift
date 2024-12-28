@@ -13,7 +13,6 @@ struct HomePageView: View {
     
     var body: some View {
         ScrollView {
-            VStack {
                 if let selectedCharacter = viewModel.viewData.selectedCharacter {
                     CharacterRowView(characterView: selectedCharacter)
                         .frame(height: 100, alignment: .center)
@@ -27,17 +26,11 @@ struct HomePageView: View {
                 Spacer()
                 
                 selectionButtons()
-            }
-            .padding(.standardPadding)
         }
+        .padding(.standardPadding)
         .scrollIndicators(.hidden)
-        .alert("You selected a character!", isPresented: $showCharacterSelectedAlert) {
-            Button("Close", role: .cancel) {
-                viewModel.closeSelectedCharacterAlert()
-            }
-        } message: {
-            Text(viewModel.viewData.alertModel.message)
-        }
+        .standardAlertModifier(isPresented: $showCharacterSelectedAlert,
+                               model: viewModel.viewData.alertModel)
         .onChange(of: viewModel.savedCharacterNotice) { oldValue, newValue in
             showCharacterSelectedAlert = newValue
         }
@@ -63,18 +56,16 @@ struct HomePageView: View {
     
     @ViewBuilder
     private func selectionButtons() -> some View {
-        HStack(alignment: .center, spacing: 16) {
-            Spacer()
+        HStack(alignment: .center) {
             SelectionButton(
                 action: { viewModel.fetchRandomCharacter() },
-                model: .clearModel(label: "Get new a Character!")
+                model: .clearModel(label: "Get new a Character!", size: .medium)
             )
             
             SelectionButton(
                 action: { viewModel.saveSelectedCharacter() },
-                model: .positiveModel(label: "I want this character!")
+                model: .positiveModel(label: "I want this character!", size: .medium)
             )
-            Spacer()
         }
     }
 }

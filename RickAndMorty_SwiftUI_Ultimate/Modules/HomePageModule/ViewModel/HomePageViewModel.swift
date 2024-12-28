@@ -74,12 +74,18 @@ class HomePageViewModel: ObservableObject {
     }
     
     private func updateSelectedCharacterViewData() {
-        viewData.alertModel = .successfullySavedCharacter()
+        viewData.alertModel = StandardAlertModifier.Model(title: "You selected a character!",
+                                                          message: "Successfully saved",
+                                                          closeAction: closeSelectedCharacterAlert,
+                                                          cancelAction: nil)
         fetchSelectedCharacterViewData()
     }
     
     private func showAlertErrorWhenSavingCharacter() {
-        viewData.alertModel = .errorSavingCharacter()
+        viewData.alertModel = StandardAlertModifier.Model(title: "You selected a character!",
+                                                          message: "There was an error saving the character",
+                                                          closeAction: closeSelectedCharacterAlert,
+                                                          cancelAction: nil)
     }
     
     func closeSelectedCharacterAlert() {
@@ -90,28 +96,9 @@ class HomePageViewModel: ObservableObject {
 struct HomePageViewRepresentable {
     var selectedCharacter: CharacterModel?
     var randomCharacter: ViewStateData<CharacterModel> = .loading
-    var alertModel: SelectedCharacterAlert = .defaultValue()
+    var alertModel: StandardAlertModifier.Model = .defaultModel
     
     static func initializationValues() -> HomePageViewRepresentable {
         HomePageViewRepresentable(selectedCharacter: nil)
-    }
-    
-    
-}
-
-struct SelectedCharacterAlert {
-    let message: String
-    let retryAction: Bool
-    
-    static func defaultValue() -> SelectedCharacterAlert {
-        SelectedCharacterAlert(message: "", retryAction: false)
-    }
-    
-    static func successfullySavedCharacter() -> SelectedCharacterAlert {
-        SelectedCharacterAlert(message: "Successfully saved", retryAction: false)
-    }
-    
-    static func errorSavingCharacter() -> SelectedCharacterAlert {
-        SelectedCharacterAlert(message: "There was an error saving the character", retryAction: false)
     }
 }
