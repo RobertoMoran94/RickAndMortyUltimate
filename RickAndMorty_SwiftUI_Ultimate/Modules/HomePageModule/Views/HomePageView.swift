@@ -9,66 +9,72 @@ import SwiftUI
 
 struct HomePageView: View {
     @StateObject var viewModel = HomePageViewModel()
-    @State var showSelectedCharacterButton: Bool = false
+    @State var showCharacterSelectedAlert: Bool = false
     
     var body: some View {
-        VStack {
-            Text("Get a Character!")
-            
-            buildCharacterCard()
-            
-            Spacer()
-            
-            selectionButtons()
+        ScrollView {
+            VStack {
+                if let selectedCharacter = viewModel.viewData.selectedCharacter {
+                    CharacterRowView(characterView: selectedCharacter)
+                        .frame(height: 100, alignment: .center)
+                }
+                
+                Text("Get a new Character!")
+                
+                buildCharacterCard()
+                    .frame(maxWidth: UIScreen.screenWidth * 0.95, minHeight: UIScreen.screenHeight * 0.55, alignment: .center)
+                
+                Spacer()
+                
+                selectionButtons()
+            }
+            .padding(.standardPadding)
         }
-        .padding(.bottom, 18)
+        .scrollIndicators(.hidden)
+        .alert("You selected a character!", isPresented: $showCharacterSelectedAlert) {
+            Button("Close", role: .cancel) {
+                viewModel.closeSelectedCharacterAlert()
+            }
+        } message: {
+            Text(viewModel.viewData.alertModel.message)
+        }
+        .onChange(of: viewModel.savedCharacterNotice) { oldValue, newValue in
+            showCharacterSelectedAlert = newValue
+        }
+        .onAppear {
+            viewModel.initialize()
+        }
     }
     
     @ViewBuilder
     private func buildCharacterCard() -> some View {
-        switch viewModel.viewData {
+        switch viewModel.viewData.randomCharacter {
         case .loading:
-            ImagePlaceHolderView(modelType: .loading)
-                .onAppear {
-                    withAnimation {
-                        self.showSelectedCharacterButton = true
-                    }
-                }
+            Rectangle()
+                .shimmer()
+            
         case let .loaded(character):
             CardCharacterView(character: character)
-                .onAppear {
-                    withAnimation {
-                        self.showSelectedCharacterButton = true
-                    }
-                }
+            
         case .error:
             ImagePlaceHolderView(modelType: .error)
-                .onAppear {
-                    withAnimation {
-                        self.showSelectedCharacterButton = true
-                    }
-                }
         }
     }
     
     @ViewBuilder
     private func selectionButtons() -> some View {
-        HStack {
+        HStack(alignment: .center, spacing: 16) {
+            Spacer()
             SelectionButton(
-                action: {
-                    viewModel.fetchRandomCharacter()
-                },
-                model: .clearModel(label: "Get a Character!")
+                action: { viewModel.fetchRandomCharacter() },
+                model: .clearModel(label: "Get new a Character!")
             )
             
-            if showSelectedCharacterButton {
-                SelectionButton(
-                    action: {
-                        // TODO: Trigger action.
-                    },
-                    model: .positiveModel(label: "Select this character!")
-                )
-            }
+            SelectionButton(
+                action: { viewModel.saveSelectedCharacter() },
+                model: .positiveModel(label: "I want this character!")
+            )
+            Spacer()
         }
     }
 }

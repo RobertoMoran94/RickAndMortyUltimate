@@ -7,6 +7,16 @@
 
 import SwiftUI
 
-extension View {
+extension UIScreen {
+    static var screenWidth: CGFloat {
+        UIScreen.main.bounds.width
+    }
+    
+    static var screenHeight: CGFloat {
+        UIScreen.main.bounds.height
+    }
+}
 
+extension EdgeInsets {
+    static let standardPadding = EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
 }

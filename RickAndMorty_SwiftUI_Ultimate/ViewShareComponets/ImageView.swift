@@ -18,7 +18,9 @@ struct ImageView: View {
             } else if phase.error != nil {
                 ImagePlaceHolderView(modelType: .error)
             } else {
-                ImagePlaceHolderView(modelType: .loading)
+                Rectangle()
+                    .fill(Color.secondary)
+                    .shimmer()
             }
         }
     }
