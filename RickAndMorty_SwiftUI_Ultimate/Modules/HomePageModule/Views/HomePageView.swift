@@ -14,14 +14,20 @@ struct HomePageView: View {
     var body: some View {
         ScrollView {
                 if let selectedCharacter = viewModel.viewData.selectedCharacter {
-                    CharacterRowView(characterView: selectedCharacter)
-                        .frame(height: 100, alignment: .center)
+                    CharacterRowView(characterView: selectedCharacter) {
+                        withAnimation {
+                            viewModel.showAlertWhenDeletingCharacter()
+                        }
+                    }
+                    .frame(maxHeight: 120, alignment: .center)
                 }
                 
                 Text("Get a new Character!")
                 
                 buildCharacterCard()
-                    .frame(maxWidth: UIScreen.screenWidth * 0.95, minHeight: UIScreen.screenHeight * 0.55, alignment: .center)
+                    .frame(maxWidth: UIScreen.screenWidth * 0.95,
+                           minHeight: UIScreen.screenHeight * 0.55,
+                           alignment: .center)
                 
                 Spacer()
                 
@@ -31,7 +37,7 @@ struct HomePageView: View {
         .scrollIndicators(.hidden)
         .standardAlertModifier(isPresented: $showCharacterSelectedAlert,
                                model: viewModel.viewData.alertModel)
-        .onChange(of: viewModel.savedCharacterNotice) { oldValue, newValue in
+        .onChange(of: viewModel.screenAlertState) { oldValue, newValue in
             showCharacterSelectedAlert = newValue
         }
         .onAppear {
@@ -63,7 +69,11 @@ struct HomePageView: View {
             )
             
             SelectionButton(
-                action: { viewModel.saveSelectedCharacter() },
+                action: {
+                    withAnimation {
+                        viewModel.saveSelectedCharacter()
+                    }
+                },
                 model: .positiveModel(label: "I want this character!", size: .medium)
             )
         }

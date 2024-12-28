@@ -11,6 +11,8 @@ protocol UserDefaultsData {
     func saveUserCharacterSelection(from character: CharacterModel) -> Bool
     
     func fetchCharacterSelection() -> CharacterModel?
+    
+    func deleteSelectedCharacter() -> Bool
 }
 
 class UserDefaultsDataImpl: UserDefaultsData {
@@ -40,5 +42,10 @@ class UserDefaultsDataImpl: UserDefaultsData {
             return nil
         }
         return decodedCharacter
+    }
+    
+    func deleteSelectedCharacter() -> Bool {
+        userDefaults.removeObject(forKey: userCharacterKey)
+        return true
     }
 }

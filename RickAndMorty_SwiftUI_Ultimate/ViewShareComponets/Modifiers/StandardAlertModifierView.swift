@@ -23,8 +23,8 @@ struct StandardAlertModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .alert(model.title, isPresented: $isPresented) {
-                Button("Ok", role: .cancel) {
-                    model.closeAction()
+                Button("Ok") {
+                    model.okAction()
                 }
                 if let action = model.cancelAction {
                     Button("Cancel", role: .cancel) {
@@ -41,11 +41,11 @@ extension StandardAlertModifier {
     struct Model {
         let title: String
         let message: String
-        let closeAction: () -> Void
+        let okAction: () -> Void
         let cancelAction: (() -> Void)?
         
         static var defaultModel: Model {
-            .init(title: "Title", message: "Message", closeAction: {}, cancelAction: nil)
+            .init(title: "Title", message: "Message", okAction: {}, cancelAction: nil)
         }
     }
 }

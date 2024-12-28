@@ -10,7 +10,7 @@ import Combine
 
 class HomePageViewModel: ObservableObject {
     @Published var viewData: HomePageViewRepresentable = .initializationValues()
-    @Published var savedCharacterNotice: Bool = false
+    @Published var screenAlertState: Bool = false
     private var cancellables: Set<AnyCancellable> = []
     @Inject private var repository: HomePageRepository
     private var currentCharacter: CharacterModel?
@@ -23,6 +23,8 @@ class HomePageViewModel: ObservableObject {
     func fetchSelectedCharacterViewData() {
         if let selectedCharacter = repository.fetchSelectedCharacter() {
             viewData.selectedCharacter = selectedCharacter
+        } else {
+            viewData.selectedCharacter = nil
         }
     }
     
@@ -70,13 +72,13 @@ class HomePageViewModel: ObservableObject {
         } else {
             showAlertErrorWhenSavingCharacter()
         }
-        self.savedCharacterNotice = true
+        showScreenAlert()
     }
     
     private func updateSelectedCharacterViewData() {
         viewData.alertModel = StandardAlertModifier.Model(title: "You selected a character!",
                                                           message: "Successfully saved",
-                                                          closeAction: closeSelectedCharacterAlert,
+                                                          okAction: closeScreenAlert,
                                                           cancelAction: nil)
         fetchSelectedCharacterViewData()
     }
@@ -84,12 +86,32 @@ class HomePageViewModel: ObservableObject {
     private func showAlertErrorWhenSavingCharacter() {
         viewData.alertModel = StandardAlertModifier.Model(title: "You selected a character!",
                                                           message: "There was an error saving the character",
-                                                          closeAction: closeSelectedCharacterAlert,
+                                                          okAction: closeScreenAlert,
                                                           cancelAction: nil)
     }
     
-    func closeSelectedCharacterAlert() {
-        self.savedCharacterNotice = false
+    func showAlertWhenDeletingCharacter() {
+        viewData.alertModel = StandardAlertModifier.Model(title: "You're Deleting your Character!",
+                                                          message: "Are you sure you want to delete this character?",
+                                                          okAction: deleteSelectedCharacter,
+                                                          cancelAction: closeScreenAlert)
+        showScreenAlert()
+    }
+    
+    
+    private func closeScreenAlert() {
+        self.screenAlertState = false
+    }
+    
+    private func deleteSelectedCharacter() {
+        if repository.deleteSelectedCharacter() {
+            fetchSelectedCharacterViewData()
+        }
+        closeScreenAlert()
+    }
+    
+    private func showScreenAlert() {
+        self.screenAlertState = true
     }
 }
 
