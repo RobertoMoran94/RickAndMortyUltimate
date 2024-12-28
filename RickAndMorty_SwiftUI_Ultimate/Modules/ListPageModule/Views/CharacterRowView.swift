@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct CharacterListView: View {
+struct CharacterRowView: View {
     let characterView: CharacterModel
     
     var body: some View {
@@ -26,6 +26,6 @@ struct CharacterListView: View {
         .padding(.vertical ,6)
         .padding(.horizontal ,12)
         .background(Color.blue.opacity(0.6))
-        .cornerRadius(8)
+        .cornerRadius(6)
     }
 }

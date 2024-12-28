@@ -11,7 +11,7 @@ struct ListPageViewRepresentable {
     let characterList: [CharacterModel]
 }
 
-struct CharacterModel {
+struct CharacterModel: Codable {
     let id: Int
     let name: String
     let status: String

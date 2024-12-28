@@ -28,7 +28,12 @@ class AppRootContainer: DependencyContainer {
             HomePageRepositoryImpl()
         }
         
-        //MARK: Service
+        //MARK: LocalData
+        self.register(forKey: UserDefaultsData.self) {
+            UserDefaultsDataImpl()
+        }
+        
+        //MARK: RemoteData/Service
         self.register(forKey: ServiceAsync.self) {
             AsyncAwaitService()
         }

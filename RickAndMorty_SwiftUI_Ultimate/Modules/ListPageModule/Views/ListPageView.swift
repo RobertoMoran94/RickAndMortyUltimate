@@ -98,7 +98,7 @@ struct ListPageView: View {
     private func characterListView(from viewData: ListPageViewRepresentable) -> some View {
         LazyVStack {
             ForEach(viewData.characterList, id: \.id) { character in
-                CharacterListView(characterView: character).onAppear {
+                CharacterRowView(characterView: character).onAppear {
                     if viewModel.hasReachedEnd(of: character) {
                         Task {
                             await viewModel.fetchMoreCharacters()

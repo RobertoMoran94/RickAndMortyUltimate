@@ -10,10 +10,15 @@ import Combine
 
 protocol HomePageRepository {
     func fetchRandomCharacter() -> AnyPublisher<RawCharacter, ServiceError>
+    
+    func saveCharacter(character: CharacterModel) -> Bool
+    
+    func fetchSelectedCharacter() -> CharacterModel?
 }
 
 class HomePageRepositoryImpl: HomePageRepository {
     @Inject private var service: CombineService
+    @Inject private var localData: UserDefaultsData
     
     func fetchRandomCharacter() -> AnyPublisher<RawCharacter, ServiceError> {
         let url = getRandomCharacterURL()
@@ -27,5 +32,13 @@ class HomePageRepositoryImpl: HomePageRepository {
         let url = baseURL.appending("character/\(randomCharacter)")
         guard let newURL = URL(string: url) else { return nil }
         return newURL
+    }
+    
+    func saveCharacter(character: CharacterModel) -> Bool {
+        return localData.saveUserCharacterSelection(from: character)
+    }
+    
+    func fetchSelectedCharacter() -> CharacterModel? {
+        return localData.fetchCharacterSelection()
     }
 }

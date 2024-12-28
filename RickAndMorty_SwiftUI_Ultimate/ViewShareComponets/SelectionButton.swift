@@ -75,6 +75,7 @@ struct SelectionButton: View {
             HStack(alignment: .center) {
                 Text(model.label)
                     .font(.subheadline)
+                    .fixedSize(horizontal: false, vertical: true)
                     .foregroundStyle(model.style.fontColor)
                     .padding()
                     .background(model.style.backgroundColor)

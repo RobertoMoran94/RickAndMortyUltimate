@@ -21,9 +21,7 @@ struct CardCharacterView: View {
         .clipShape(Rectangle())
         .overlay(Rectangle().stroke(Color.blue, lineWidth: 3))
         .shadow(radius: 5)
-        .cornerRadius(12)
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
+        .cornerRadius(6)
     }
     
     @ViewBuilder
