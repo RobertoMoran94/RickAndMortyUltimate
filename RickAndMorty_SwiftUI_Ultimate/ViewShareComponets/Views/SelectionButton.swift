@@ -11,21 +11,22 @@ extension SelectionButton {
     struct SelectionButtonModel {
         let label: String
         let style: SelectionButton.BackgroundColor
+        let size: SelectionButton.ButtonSize
         
-        static func neutralModel(label: String) -> Self {
-            SelectionButtonModel(label: label, style: .neutral)
+        static func neutralModel(label: String, size: SelectionButton.ButtonSize) -> Self {
+            SelectionButtonModel(label: label, style: .neutral, size: size)
         }
 
-        static func positiveModel(label: String) -> Self {
-            SelectionButtonModel(label: label, style: .positive)
+        static func positiveModel(label: String, size: SelectionButton.ButtonSize) -> Self {
+            SelectionButtonModel(label: label, style: .positive, size: size)
         }
 
-        static func alertModel(label: String) -> Self {
-            SelectionButtonModel(label: label, style: .alert)
+        static func alertModel(label: String, size: SelectionButton.ButtonSize) -> Self {
+            SelectionButtonModel(label: label, style: .alert, size: size)
         }
 
-        static func clearModel(label: String) -> Self {
-            SelectionButtonModel(label: label, style: .clear)
+        static func clearModel(label: String, size: SelectionButton.ButtonSize) -> Self {
+            SelectionButtonModel(label: label, style: .clear, size: size)
         }
 
     }
@@ -62,6 +63,23 @@ extension SelectionButton {
             }
         }
     }
+    
+    enum ButtonSize {
+        case small
+        case medium
+        case large
+        
+        var width: CGFloat {
+            switch self {
+            case .small:
+                return UIScreen.screenWidth * 0.2
+            case .medium:
+                return UIScreen.screenWidth * 0.35
+            case .large:
+                return UIScreen.screenWidth * 0.75
+            }
+        }
+    }
 }
 
 struct SelectionButton: View {
@@ -80,11 +98,12 @@ struct SelectionButton: View {
                     .padding()
                     .background(model.style.backgroundColor)
                     .cornerRadius(12)
+                    .frame(width: model.size.width, alignment: .center)
             }
         }
     }
 }
 
 #Preview {
-    SelectionButton(action: {}, model: .neutralModel(label: "Button"))
+    SelectionButton(action: {}, model: .neutralModel(label: "Button", size: .medium))
 }
