@@ -9,6 +9,7 @@ import SwiftUI
 struct ProfileDescriptionView: View {
     let name: String
     let statusColor: Color
+    var fontColor: Color = .white
     let specie: String
     let originName: String
     
@@ -17,7 +18,7 @@ struct ProfileDescriptionView: View {
             Text(name)
                 .font(.subheadline)
                 .fontWeight(.bold)
-                .foregroundColor(.white)
+                .foregroundColor(fontColor)
                 .padding(.top, 4)
             
             
@@ -28,13 +29,13 @@ struct ProfileDescriptionView: View {
                 
                 Text(specie)
                     .font(.caption)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(fontColor)
                     .fontWeight(.medium)
             }
             
             Text(originName)
                 .font(.caption)
-                .foregroundStyle(.white)
+                .foregroundStyle(fontColor)
                 .fontWeight(.medium)
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(alignment: .center)

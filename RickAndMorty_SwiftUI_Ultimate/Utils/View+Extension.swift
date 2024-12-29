@@ -16,7 +16,3 @@ extension UIScreen {
         UIScreen.main.bounds.height
     }
 }
-
-extension EdgeInsets {
-    static let standardPadding = EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
-}

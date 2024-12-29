@@ -24,7 +24,7 @@ struct NavBarRootView: View {
         case .favorites:
             Text("favorites")
         case .profile:
-            Text("profile")
+            ProfilePageView()
         }
     }
 }
