@@ -18,6 +18,8 @@ struct CharacterModel: Codable {
     let species: String
     let originName: String
     let locationName: String
+    let type: String
+    let gender: String
     let image: URL
     
     var statusColor: Color {

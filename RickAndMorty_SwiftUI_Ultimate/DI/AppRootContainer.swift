@@ -28,6 +28,10 @@ class AppRootContainer: DependencyContainer {
             HomePageRepositoryImpl()
         }
         
+        self.register(forKey: ProfilePageRepository.self) {
+            ProfilePageRepositoryImpl()
+        }
+        
         //MARK: LocalData
         self.register(forKey: UserDefaultsData.self) {
             UserDefaultsDataImpl()

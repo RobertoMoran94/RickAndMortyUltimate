@@ -51,10 +51,8 @@ struct HomePageView: View {
         case .loading:
             Rectangle()
                 .shimmer()
-            
         case let .loaded(character):
             CardCharacterView(character: character)
-            
         case .error:
             ImagePlaceHolderView(modelType: .error)
         }

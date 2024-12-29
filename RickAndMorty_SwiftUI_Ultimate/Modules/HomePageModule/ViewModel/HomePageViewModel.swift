@@ -45,7 +45,7 @@ class HomePageViewModel: ObservableObject {
     }
     
     private func handleFetchedCharacter(with data: RawCharacter) {
-        guard let id = data.id, let name = data.name, let status = data.status, let species = data.species, let origin = data.origin?.name, let location = data.location?.name, let url = data.image, let image =  URL(string: url) else {
+        guard let id = data.id, let name = data.name, let status = data.status, let species = data.species, let origin = data.origin?.name, let location = data.location?.name, let url = data.image, let image =  URL(string: url), let gender = data.gender, let type = data.type else {
             viewData.randomCharacter = .error
             return
         }
@@ -55,6 +55,8 @@ class HomePageViewModel: ObservableObject {
                                           species: species,
                                           originName: origin,
                                           locationName: location,
+                                          type: type,
+                                          gender: gender,
                                           image: image)
         currentCharacter = newCharacter
         viewData.randomCharacter = .loaded(newCharacter)
@@ -115,12 +117,3 @@ class HomePageViewModel: ObservableObject {
     }
 }
 
-struct HomePageViewRepresentable {
-    var selectedCharacter: CharacterModel?
-    var randomCharacter: ViewStateData<CharacterModel> = .loading
-    var alertModel: StandardAlertModifier.Model = .defaultModel
-    
-    static func initializationValues() -> HomePageViewRepresentable {
-        HomePageViewRepresentable(selectedCharacter: nil)
-    }
-}
