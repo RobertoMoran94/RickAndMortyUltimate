@@ -9,12 +9,7 @@ import SwiftUI
 
 struct FavoritePageView: View {
     @StateObject var viewModel = FavoritePageViewModel()
-    
-    let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible())
-    ]
-    
+
     var body: some View {
         ScrollView {
             VStack(alignment: .center) {
@@ -50,9 +45,11 @@ struct FavoritePageView: View {
         if characters.isEmpty {
             Text("You haven't selected any favorites chracters yet")
         } else {
-            LazyVGrid(columns: columns, alignment: .center, spacing: 12) {
+            LazyVStack {
                 ForEach(characters, id: \.id) { character in
-                    CharacterGridView(characterView: character)
+                    CharacterRowView(characterView: character,
+                                     deleteAction: nil,
+                                     didSelectedFavoriteAction: nil)
                 }
             }
         }

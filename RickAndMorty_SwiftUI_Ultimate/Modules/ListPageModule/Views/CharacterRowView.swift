@@ -52,7 +52,7 @@ struct CharacterRowView: View {
                         .foregroundColor(.white)
                         .cornerRadius(8)
                 }
-            } else {
+            } else if let action = didSelectedFavoriteAction {
                 Image(systemName: isFavorite || characterView.isFavorite ? "heart.fill" : "heart")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -60,10 +60,8 @@ struct CharacterRowView: View {
                     .foregroundStyle(.red)
                     .padding(.trailing)
                     .onTapGesture {
-                        if let action = didSelectedFavoriteAction {
-                            let actionType: CharacterFavoriteAction = isFavorite || characterView.isFavorite ? .unfavorite : .favorite
-                            action(characterView, actionType)
-                        }
+                        let actionType: CharacterFavoriteAction = isFavorite || characterView.isFavorite ? .unfavorite : .favorite
+                        action(characterView, actionType)
                         isFavorite = !(isFavorite || characterView.isFavorite)
                     }
             }
