@@ -45,19 +45,7 @@ class HomePageViewModel: ObservableObject {
     }
     
     private func handleFetchedCharacter(with data: RawCharacter) {
-        guard let id = data.id, let name = data.name, let status = data.status, let species = data.species, let origin = data.origin?.name, let location = data.location?.name, let url = data.image, let image =  URL(string: url), let gender = data.gender, let type = data.type else {
-            viewData.randomCharacter = .error
-            return
-        }
-        let newCharacter = CharacterModel(id: id,
-                                          name: name,
-                                          status: status,
-                                          species: species,
-                                          originName: origin,
-                                          locationName: location,
-                                          type: type,
-                                          gender: gender,
-                                          image: image)
+        guard let newCharacter = data.toCharacterModel() else { return }
         currentCharacter = newCharacter
         viewData.randomCharacter = .loaded(newCharacter)
     }

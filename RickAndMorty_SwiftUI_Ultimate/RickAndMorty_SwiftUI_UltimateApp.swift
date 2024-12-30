@@ -9,8 +9,6 @@ import SwiftUI
 
 @main
 struct RickAndMorty_SwiftUI_UltimateApp: App {
-    let persistenceController = PersistenceController.shared
-    
     init() {
         InjectRoot.attach(rootContainer: AppRootContainer.shared)
     }
@@ -18,7 +16,6 @@ struct RickAndMorty_SwiftUI_UltimateApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
