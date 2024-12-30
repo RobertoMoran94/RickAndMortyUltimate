@@ -98,13 +98,20 @@ struct ListPageView: View {
     private func characterListView(from viewData: ListPageViewRepresentable) -> some View {
         LazyVStack {
             ForEach(viewData.characterList, id: \.id) { character in
-                CharacterRowView(characterView: character).onAppear {
-                    if viewModel.hasReachedEnd(of: character) {
-                        Task {
-                            await viewModel.fetchMoreCharacters()
-                        }
-                    }
+                CharacterRowView(characterView: character, didSelectedFavoriteAction: { character, actionType in
+                    viewModel.userDidSelected(character: character, with: actionType)
+                })
+                .onAppear {
+                    handleReachEndOfList(with: character)
                 }
+            }
+        }
+    }
+    
+    private func handleReachEndOfList(with character: CharacterModel) {
+        if viewModel.hasReachedEnd(of: character) {
+            Task {
+                await viewModel.fetchMoreCharacters()
             }
         }
     }

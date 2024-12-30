@@ -84,19 +84,25 @@ class ListPageViewModel: ObservableObject {
     
     private func viewData(from rawData: [RawCharacter]?) -> [CharacterModel] {
         let data = rawData?.compactMap({ (rawCharacter) -> CharacterModel? in
-            guard let id = rawCharacter.id, let name = rawCharacter.name, let status = rawCharacter.status, let species = rawCharacter.species, let origin = rawCharacter.origin?.name, let location = rawCharacter.location?.name, let url = rawCharacter.image, let image =  URL(string: url), let gender = rawCharacter.gender, let type = rawCharacter.type else {
-                return nil
-            }
-            return CharacterModel(id: id,
-                                  name: name,
-                                  status: status,
-                                  species: species,
-                                  originName: origin,
-                                  locationName: location,
-                                  type: type,
-                                  gender: gender,
-                                  image: image)
+            return rawCharacter.toCharacterModel()
         })
         return data ?? []
+    }
+    
+    func userDidSelected(character: CharacterModel, with actionType: CharacterFavoriteAction) {
+        switch actionType {
+        case .favorite:
+            userDidFavorite(character: character)
+        case .unfavorite:
+            userDidUnfavorite(character: character)
+        }
+    }
+    
+    private func userDidFavorite(character: CharacterModel) {
+        repository.userDidFavorite(character: character)
+    }
+    
+    private func userDidUnfavorite(character: CharacterModel) {
+        repository.userDidUnfavorite(character: character)
     }
 }

@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import CoreData
 
 class AppRootContainer: DependencyContainer {
     static let shared: DependencyContainer = AppRootContainer()
     
+    var viewContext: PersistenceController = PersistenceController.shared
     var attachedContainers: [any DependencyContainer] = []
     var factories: [ObjectIdentifier : () -> Any] = [:]
     
@@ -32,6 +34,10 @@ class AppRootContainer: DependencyContainer {
             ProfilePageRepositoryImpl()
         }
         
+        self.register(forKey: FavoritePageRepository.self) {
+            FavoritePageRepositoryImpl()
+        }
+        
         //MARK: LocalData
         self.register(forKey: UserDefaultsData.self) {
             UserDefaultsDataImpl()
@@ -44,6 +50,13 @@ class AppRootContainer: DependencyContainer {
         
         self.register(forKey: CombineService.self) {
             CombineServiceImpl()
+        }
+        
+        //MARK: LocalData
+        self.register(forKey: FavoriteCharacterLocalData.self) {
+            FavoriteCharacterLocalDataImpl(
+                viewContext: self.viewContext.container.viewContext
+            )
         }
     }
 }
