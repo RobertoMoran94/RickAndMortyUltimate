@@ -6,11 +6,19 @@
 //
 
 import SwiftUI
+import Combine
+
+class SubscriptionManager: ObservableObject {
+    var subscriptions = Set<AnyCancellable>()
+}
 
 struct HomePageView: View {
-    @StateObject var viewModel = HomePageViewModel()
+    @StateObject private var viewModel = HomePageViewModel()
+    @StateObject private var subscriptionManager = SubscriptionManager()
     @State var showCharacterSelectedAlert: Bool = false
     @State private var presentCharacterDetail: Bool = false
+    private var subscriptions = Set<AnyCancellable>()
+    private let actionSubject = PassthroughSubject<Void, Never>()
     
     var body: some View {
         ScrollView {
@@ -42,16 +50,16 @@ struct HomePageView: View {
             showCharacterSelectedAlert = newValue
         }
         .onAppear {
+            setupCombineSubscriptions()
             viewModel.initialize()
         }
         .sheet(isPresented: $presentCharacterDetail) {
             let selectedCharacter = viewModel.getCharacterSelected()
-            GenericBottomSheet {
+            GenericBottomSheet(content: {
                 ProfilePageView(characterId: selectedCharacter?.id)
-            } onCloseAction: {
-                self.presentCharacterDetail = false
-            }
-
+            }, onSelectCharacter: {
+                
+            }, actionSubject: actionSubject)
         }
     }
     
@@ -88,6 +96,15 @@ struct HomePageView: View {
                 model: .positiveModel(label: "I want this character!", size: .medium)
             )
         }
+    }
+}
+
+extension HomePageView {
+    private func setupCombineSubscriptions() {
+        actionSubject.sink { [weak viewModel] in
+            viewModel?.saveSelectedCharacter()
+        }
+        .store(in: &subscriptionManager.subscriptions)
     }
 }
 
