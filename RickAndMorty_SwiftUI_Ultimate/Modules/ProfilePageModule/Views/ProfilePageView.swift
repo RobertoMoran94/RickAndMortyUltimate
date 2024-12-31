@@ -9,13 +9,18 @@ import SwiftUI
 
 struct ProfilePageView: View {
     @StateObject var viewModel = ProfilePageViewModel()
+    private let characterId: Int?
+    
+    init(characterId: Int? = nil) {
+        self.characterId = characterId
+    }
 
     var body: some View {
         VStack {
             generateScreen()
         }
-        .onAppear {
-            viewModel.fetchProfileData()
+        .task {
+            await viewModel.fetchProfileData(with: self.characterId)
         }
     }
     
@@ -121,5 +126,5 @@ struct ProfilePageView: View {
 }
 
 #Preview {
-    ProfilePageView()
+    ProfilePageView(characterId: 0)
 }

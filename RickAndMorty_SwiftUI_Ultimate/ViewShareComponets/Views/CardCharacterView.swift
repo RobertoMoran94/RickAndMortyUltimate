@@ -8,6 +8,7 @@ import SwiftUI
 
 struct CardCharacterView: View {
     let character: CharacterModel
+    let userDidTap: (CharacterModel) -> Void
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -29,6 +30,9 @@ struct CardCharacterView: View {
         ZStack(alignment: .topTrailing) {
             ImageView(url: character.image)
                 .clipped()
+                .onTapGesture {
+                    userDidTap(character)
+                }
             
             CharacterAliveView(model: character)
         }

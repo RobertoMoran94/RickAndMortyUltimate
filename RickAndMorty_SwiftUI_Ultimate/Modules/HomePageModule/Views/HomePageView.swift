@@ -10,6 +10,7 @@ import SwiftUI
 struct HomePageView: View {
     @StateObject var viewModel = HomePageViewModel()
     @State var showCharacterSelectedAlert: Bool = false
+    @State private var presentCharacterDetail: Bool = false
     
     var body: some View {
         ScrollView {
@@ -43,6 +44,15 @@ struct HomePageView: View {
         .onAppear {
             viewModel.initialize()
         }
+        .sheet(isPresented: $presentCharacterDetail) {
+            let selectedCharacter = viewModel.getCharacterSelected()
+            GenericBottomSheet {
+                ProfilePageView(characterId: selectedCharacter?.id)
+            } onCloseAction: {
+                self.presentCharacterDetail = false
+            }
+
+        }
     }
     
     @ViewBuilder
@@ -52,7 +62,10 @@ struct HomePageView: View {
             Rectangle()
                 .shimmer()
         case let .loaded(character):
-            CardCharacterView(character: character)
+            CardCharacterView(character: character, userDidTap: { character in
+                viewModel.saveOnCharacterDetailsSelected(character: character)
+                self.presentCharacterDetail = true
+            })
         case .error:
             ImagePlaceHolderView(modelType: .error)
         }

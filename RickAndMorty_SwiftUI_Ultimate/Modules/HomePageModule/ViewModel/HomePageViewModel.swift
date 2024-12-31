@@ -14,6 +14,8 @@ class HomePageViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
     @Inject private var repository: HomePageRepository
     private var currentCharacter: CharacterModel?
+    private var onCharacterSelected: CharacterModel? = nil
+    private let lock: NSLock = NSLock()
     
     func initialize() {
         fetchSelectedCharacterViewData()
@@ -102,6 +104,18 @@ class HomePageViewModel: ObservableObject {
     
     private func showScreenAlert() {
         self.screenAlertState = true
+    }
+    
+    func saveOnCharacterDetailsSelected(character: CharacterModel) {
+        defer { lock.unlock() }
+        lock.lock()
+        self.onCharacterSelected = character
+    }
+    
+    func getCharacterSelected() -> CharacterModel? {
+        defer { lock.unlock() }
+        lock.lock()
+        return onCharacterSelected
     }
 }
 

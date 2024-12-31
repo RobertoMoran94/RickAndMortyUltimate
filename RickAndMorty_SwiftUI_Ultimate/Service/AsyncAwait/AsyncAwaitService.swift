@@ -24,7 +24,9 @@ class AsyncAwaitService: ServiceAsync {
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
             try validateHTTPResponse(with: response)
-            guard !data.isEmpty else { throw ServiceError.emptyResponse }
+            guard !data.isEmpty else {
+                throw ServiceError.emptyResponse
+            }
             return try decodeData(with: data)
         } catch let error as ServiceError {
             throw error
