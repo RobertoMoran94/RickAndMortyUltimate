@@ -11,9 +11,9 @@ class ProfilePageViewModel: ObservableObject {
     @Inject var repository: ProfilePageRepository
     @Published var viewData: ViewStateData<CharacterModel> = .loading
     
-    func fetchProfileData() {
+    func fetchProfileData(with characterId: Int?) async {
         viewData = .loading
-        if let profile = repository.fetchProfile() {
+        if let profile = await repository.fetchProfile(characterId: characterId) {
             viewData = .loaded(profile)
             print("MORGAN DEBUG - Profile: \(profile)")
         } else {
