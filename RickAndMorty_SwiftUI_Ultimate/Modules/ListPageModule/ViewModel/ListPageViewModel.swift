@@ -12,7 +12,8 @@ class ListPageViewModel: ObservableObject {
     private var currentPage: Int
     private var currentCharacters: [CharacterModel] = []
     private var searchTask: Task<Void, Never>?
-    
+    private var searchingWorkItem: DispatchWorkItem?
+    private var dispatchGroup: DispatchGroup?
     @Published var viewData: ViewStateData<ListPageViewRepresentable> = .loading
     
     init(currentPage: Int = 1) {
@@ -57,6 +58,7 @@ class ListPageViewModel: ObservableObject {
         currentCharacters.last?.id == character.id
     }
     
+    // MARK: - Search after user finished typing with Task
     func searchForCharacters(with query: String) async {
         viewData = .loading
         currentCharacters = []
@@ -78,7 +80,40 @@ class ListPageViewModel: ObservableObject {
             } catch {
                 viewData = .error
             }
-            
+        }
+    }
+    
+    // MARK: - Search after user finished typing with DispatchWorkItem.
+    func searchForCharactersV2(with query: String) async {
+        searchingWorkItem?.cancel()
+        viewData = .loading
+        currentCharacters = []
+        
+        let workItem = DispatchWorkItem { [weak self] in
+            Task {
+                do {
+                    let result = try await self?.repository.searchCharacters(with: query)
+                    let characterListModel = self?.viewData(from: result)
+                    guard let model = characterListModel, model.isEmpty else {
+                        self?.viewData = .error
+                        return
+                    }
+                    self?.currentCharacters.append(contentsOf: model)
+                    guard let characters = self?.currentCharacters else {
+                        self?.viewData = .error
+                        return
+                    }
+                    let viewModel = ListPageViewRepresentable(characterList: characters)
+                    self?.viewData = .loaded(viewModel)
+                } catch {
+                    self?.viewData = .error
+                }
+            }
+        }
+        searchingWorkItem = workItem
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            workItem.perform()
         }
     }
     
