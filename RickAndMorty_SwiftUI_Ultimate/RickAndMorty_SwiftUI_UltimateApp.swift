@@ -17,5 +17,17 @@ struct RickAndMorty_SwiftUI_UltimateApp: App {
         WindowGroup {
             ContentView()
         }
+        .onChange(of: ScenePhase.active) { phase in
+            switch phase {
+            case .background:
+                print("RickAndMortyApp: Goes to background")
+            case .inactive:
+                print("RickAndMortyApp: Goes to Inactive")
+            case .active:
+                print("RickAndMortyApp: Goes to Active")
+            @unknown default:
+                print("RickAndMortyApp: Goes to Default")
+            }
+        }
     }
 }

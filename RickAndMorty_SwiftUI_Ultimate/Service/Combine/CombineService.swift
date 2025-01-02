@@ -40,7 +40,7 @@ class CombineServiceImpl: CombineService {
         return response.data
     }
     
-    private func handleAnyError(with error: any Error) -> ServiceError {
+    private func handleAnyError(with error: Error) -> ServiceError {
         if let serviceError = error as? ServiceError {
             return serviceError
         } else if error is DecodingError {
